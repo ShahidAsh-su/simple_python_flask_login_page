@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for
+from flask import Flask, render_template, url_for, request, redirect
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
@@ -8,8 +8,8 @@ db = SQLAlchemy(app)
 
 class User(db.Model):
    id = db.Column(db.Integer, primary_key=True)
-   emailId = db.Column(db.String(120),nullable=False,unique=True)
-   userName = db.Column(db.String(120),nullable=False,unique=True)
+   emailid = db.Column(db.String(120),nullable=False,unique=True)
+   username = db.Column(db.String(120),nullable=False,unique=True)
    password = db.Column(db.String(120),nullable=False, unique=True)
    phone = db.Column(db.Integer,nullable=False, unique=True)
 
@@ -19,7 +19,8 @@ class User(db.Model):
 
 @app.route('/')
 def home():
-   return render_template('home.html')
+   users = User.query.all()
+   return render_template('home.html', users = users)
 
 @app.route('/login')
 def login():
@@ -28,6 +29,21 @@ def login():
 @app.route('/register')
 def register():
    return render_template('register.html')
+
+@app.route("/register_data", methods=['POST'])
+def register_data():
+   #if request.methods == 'POST':
+   username = request.form['username']
+   emailid = request.form['email']
+   password = request.form['password']
+   phone = request.form['phone']
+   new_user = User(username=username, password=password,emailid=emailid,phone=phone)
+   try:
+      db.session.add(new_user)
+      db.session.commit()
+      return redirect("/")
+   except:
+      return "Error"
 
 if __name__ == "__main__":
     app.run(debug=True)

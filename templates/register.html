@@ -6,5 +6,29 @@
 
 
 {% block body %}
-    
+    <div class="header">
+        <h1>Register</h1>
+    </div>
+    <div class="body">
+        <form method="POST" action="{{url_for('register_data')}}">
+            <div class="form-group">
+              <label for="">Username</label>
+              <input type="text" class="form-control" name="username" id="username" aria-describedby="helpId" placeholder="Username">
+            </div>
+            <div class="form-group">
+              <label for="">Email id</label>
+              <input type="email" class="form-control" name="email" id="" aria-describedby="helpId" placeholder="Email ID">
+            </div>
+            <div class="form-group">
+              <label for="">Password</label>
+              <input type="password" class="form-control" name="password" id="" aria-describedby="helpId" placeholder="Password">
+            </div>
+            <div class="form-group">
+              <label for="">Phone Number</label>
+              <input type="tel" class="form-control" name="phone" id="" aria-describedby="helpId" placeholder="Phone Number">
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+
+        </form>
+    </div>
 {% endblock %}
