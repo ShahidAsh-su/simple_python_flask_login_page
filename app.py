@@ -9,6 +9,7 @@ db = SQLAlchemy(app)
 class User(db.Model):
    id = db.Column(db.Integer, primary_key=True)
    emailId = db.Column(db.String(120),nullable=False,unique=True)
+   userName = db.Column(db.String(120),nullable=False,unique=True)
    password = db.Column(db.String(120),nullable=False, unique=True)
    phone = db.Column(db.Integer,nullable=False, unique=True)
 
