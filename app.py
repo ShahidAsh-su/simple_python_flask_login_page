@@ -10,7 +10,8 @@ class User(db.Model):
    id = db.Column(db.Integer, primary_key=True)
    emailId = db.Column(db.String(120),nullable=False,unique=True)
    password = db.Column(db.String(120),nullable=False, unique=True)
-   e = db.Column(db.String(123))
+   phone = db.Column(db.Integer,nullable=False, unique=True)
+
 
    def __repr__(self):
         return '<User %r>' % self.username
