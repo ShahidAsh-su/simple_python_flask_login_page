@@ -27,6 +27,10 @@
               <label for="">Phone Number</label>
               <input type="tel" class="form-control" name="phone" id="" aria-describedby="helpId" placeholder="Phone Number">
             </div>
+            {% if msg %}
+            <span> {{ msg }} </span><a href="{{ url_for('login') }}">Login</a><br>
+
+            {% endif %}
             <button type="submit" class="btn btn-primary">Submit</button>
 
         </form>

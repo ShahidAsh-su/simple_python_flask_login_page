@@ -11,7 +11,7 @@ class User(db.Model):
    emailid = db.Column(db.String(120),nullable=False,unique=True)
    username = db.Column(db.String(120),nullable=False,unique=True)
    password = db.Column(db.String(120),nullable=False, unique=True)
-   phone = db.Column(db.Integer,nullable=False, unique=True)
+   phone = db.Column(db.Integer,nullable=False)
 
 
    def __repr__(self):
@@ -43,7 +43,8 @@ def register_data():
       db.session.commit()
       return redirect("/")
    except:
-      return "Error"
+      msg = 'Username or Email already exists'
+      return render_template('register.html',msg=msg)
 
 if __name__ == "__main__":
     app.run(debug=True)
