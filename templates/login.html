@@ -6,15 +6,18 @@
 
 
 {% block body %}
-    <form>
+    <form action="{{ url_for('login_suc') }}" method="POST">
         <div class="form-group">
           <label for="">Username</label>
-          <input type="text" class="form-control" name="" id="" aria-describedby="helpId" placeholder="Username">
+          <input type="text" class="form-control" required="required" name="Username" id="username" aria-describedby="helpId" placeholder="Username">
         </div>
         <div class="form-group">
           <label for="">Password</label>
-          <input type="password" class="form-control" name="password" id="password" placeholder="Password">
+          <input type="password" class="form-control" required="required" data-validation-required-message="Please enter your password"  name="password" id="password" placeholder="Password">
         </div>
+        {% if msg %}
+          <span style="color: red;">{{ msg }}</span><br>
+        {% endif %}
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
 {% endblock %}

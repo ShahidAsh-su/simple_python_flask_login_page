@@ -10,7 +10,7 @@ class User(db.Model):
    id = db.Column(db.Integer, primary_key=True)
    emailid = db.Column(db.String(120),nullable=False,unique=True)
    username = db.Column(db.String(120),nullable=False,unique=True)
-   password = db.Column(db.String(120),nullable=False, unique=True)
+   password = db.Column(db.String(120),nullable=False)
    phone = db.Column(db.Integer,nullable=False)
 
 
@@ -25,6 +25,25 @@ def home():
 @app.route('/login')
 def login():
    return render_template('login.html')
+
+@app.route("/login_suc", methods = ['POST'])
+def login_suc():
+   users = User.query.all()
+   username = request.form['Username']
+   password = request.form['password']
+   msg = ''
+   for user in users:
+      if user.username == username:
+         if user.password == password:
+            return render_template('success.html')
+         else:
+            msg = 'Password or Username is invalid'
+   else:
+      msg = 'Password or Username is invalid'
+      return render_template('login.html', msg = msg)
+            
+
+
 
 @app.route('/register')
 def register():
