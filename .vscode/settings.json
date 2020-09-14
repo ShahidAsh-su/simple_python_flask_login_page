@@ -9,5 +9,6 @@
         },
         "editor.suggest.insertMode": "replace"
     },
-    "python.linting.mypyEnabled": true
+    "python.linting.mypyEnabled": false,
+    "python.linting.banditEnabled": true
 }

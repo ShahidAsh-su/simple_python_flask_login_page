@@ -4,19 +4,18 @@
     <title>Home</title>
 {% endblock %}
 
-
 {% block body %}
     <a href="{{url_for('login')}}">Login</a>
     <a href="{{url_for('register')}}">Register</a>
     <div class="users">
         <h1>Users</h1>
-        {% for user in users %}
+        <!-- {% for user in users %}
             <span>{{ user.username }}</span><br>
             <span>{{ user.password }}</span><br>
             <span>{{ user.phone }}</span><br>
             <span>{{ user.emailid }}</span>
 
-        {% endfor %}
+        {% endfor %} -->
 
     </div>
 {% endblock %}

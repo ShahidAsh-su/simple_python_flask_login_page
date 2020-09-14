@@ -1,7 +1,9 @@
-from flask import Flask, render_template, url_for, request, redirect
+from flask import Flask, render_template, url_for, request, redirect, flash
+from login_register.forms import RegistrationForm ,  LoginForm
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
+app.config['SECRET_KEY'] = 'a433dad2ba8dbbb9ac25798b94fedab0'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
@@ -17,50 +19,35 @@ class User(db.Model):
    def __repr__(self):
         return '<User %r>' % self.username
 
+
+
+
 @app.route('/')
 def home():
-   users = User.query.all()
-   return render_template('home.html', users = users)
+   # users = User.query.all()
+   return render_template('home.html')
 
-@app.route('/login')
+
+
+
+@app.route('/login', methods=['POST', 'GET'])
 def login():
-   return render_template('login.html')
-
-@app.route("/login_suc", methods = ['POST'])
-def login_suc():
-   users = User.query.all()
-   username = request.form['Username']
-   password = request.form['password']
-   msg = ''
-   for user in users:
-      if user.username == username:
-         if user.password == password:
-            return render_template('success.html')
-         else:
-            msg = 'Password or Username is invalid'
-   else:
-      msg = 'Password or Username is invalid'
-      return render_template('login.html', msg = msg)
-            
+   form = LoginForm()
+   if form.validate_on_submit():
+      if form.email.data == 'afridis911@gmail.com' and form.password.data == '111111':
+         flash(f'Log in successfull {form.email.data}','success')
+         return redirect(url_for('home'))
+      else:
+         flash('Unsuccessfull','danger')
+   return render_template('login.html', form = form)
 
 
 
-@app.route('/register')
+
+@app.route('/register', methods=['GET','POST'])
 def register():
-   return render_template('register.html')
-
-@app.route("/register_data", methods=['POST'])
-def register_data():
-   #if request.methods == 'POST':
-   username = request.form['username']
-   emailid = request.form['email']
-   password = request.form['password']
-   phone = request.form['phone']
-   new_user = User(username=username, password=password,emailid=emailid,phone=phone)
-   try:
-      db.session.add(new_user)
-      db.session.commit()
-      return redirect("/")
-   except:
-      msg = 'Username or Email already exists'
-      return render_template('register.html',msg=msg)
+   form = RegistrationForm()
+   if form.validate_on_submit():
+      flash(f'Account created for {form.username.data}','success')
+      return redirect(url_for('login'))
+   return render_template('register.html', form=form)
