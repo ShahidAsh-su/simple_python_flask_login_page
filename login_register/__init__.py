@@ -64,6 +64,3 @@ def register_data():
    except:
       msg = 'Username or Email already exists'
       return render_template('register.html',msg=msg)
-
-if __name__ == "__main__":
-    app.run(debug=True)
