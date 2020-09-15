@@ -12,7 +12,10 @@ def home():
    return render_template('home.html')
 
 
-
+@app.route('/logged_in')
+def logged():
+    # user = User
+    return render_template('success.html')
 
 @app.route('/login', methods=['POST', 'GET'])
 def login():
@@ -21,7 +24,7 @@ def login():
        user = User.query.filter_by(emailid=form.email.data).first()
        if user and bcrypt.check_password_hash(user.password, form.password.data):
            login_user(user, remember=form.remember.data)
-           return redirect(url_for('home'))
+           return redirect(url_for('logged'))
        else:
            flash('Unsuccessfull, Please check your email and password','danger')
     return render_template('login.html', form = form)
