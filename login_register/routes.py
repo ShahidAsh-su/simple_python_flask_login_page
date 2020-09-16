@@ -1,4 +1,4 @@
-from flask import render_template, url_for, request, redirect, flash, request
+from flask import render_template, url_for, request, redirect, flash
 from login_register.forms import RegistrationForm ,  LoginForm
 from login_register.modules import User
 from login_register import app, bcrypt, db
