@@ -1,18 +1,15 @@
 {% extends 'base.html' %}
-
 {% block head %}
     <title>Home</title>
 {% endblock %}
-
 {% block body %}
-
-        <!-- {% for user in users %}
-            <span>{{ user.username }}</span><br>
-            <span>{{ user.password }}</span><br>
-            <span>{{ user.phone }}</span><br>
-            <span>{{ user.emailid }}</span>
-
-        {% endfor %} -->
-
-    </div>
+    {{ current_user.username }}
+    {{ current_user.emailid }}
+    <!-- {% for user in users %}
+        <span>{{ user.username }}</span><br>
+        <span>{{ user.password }}</span><br>
+        <span>{{ user.phone }}</span><br>
+        <span>{{ user.emailid }}</span>
+    {% endfor %} -->
+</div>
 {% endblock %}
