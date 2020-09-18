@@ -24,13 +24,23 @@ def login():
         return redirect(url_for('home'))
     form = LoginForm()
     if form.validate_on_submit():
-       user = User.query.filter_by(emailid=form.email.data).first()
-       if user and bcrypt.check_password_hash(user.password, form.password.data):
-           login_user(user, remember=form.remember.data)
+       emailid = User.query.filter_by(emailid=form.email.data).first()
+       user =  User.query.filter_by(username=form.email.data).first()
+       flag = False
+       try:
+           flag = bcrypt.check_password_hash(user.password, form.password.data)
+       except:
+           pass
+       try:
+           flag = bcrypt.check_password_hash(emailid.password, form.password.data)
+       except:
+           pass 
+       if ((user or emailid) and flag) :
+           login_user(user or emailid, remember=form.remember.data)
            next_page = request.args.get('next')
            return redirect(next_page) if next_page else redirect(url_for('home'))
        else:
-           flash('Incorrect, Please check your email and password','danger')
+           flash('Incorrect, Please check your Email/Username and Password','danger')
     return render_template('login.html', form = form)
 
 
@@ -42,10 +52,12 @@ def register():
       return redirect(url_for('home'))
    form = RegistrationForm()
    if form.validate_on_submit():
+      name = form.name.data
       username = form.username.data
       email = form.email.data
+      blood_group = form.blood_group.data
       password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
-      user = User(username=username, emailid=email, password=password)
+      user = User(username=username, emailid=email, password=password, blood_group=blood_group, name=name)
       try:
          db.session.add(user)
          db.session.commit()

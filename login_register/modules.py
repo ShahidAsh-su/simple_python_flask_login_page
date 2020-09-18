@@ -9,9 +9,12 @@ class User(db.Model, UserMixin):
    id = db.Column(db.Integer, primary_key=True)
    emailid = db.Column(db.String(120),nullable=False,unique=True)
    username = db.Column(db.String(120),nullable=False,unique=True)
+   name = db.Column(db.String(120),nullable=False)
    password = db.Column(db.String(120),nullable=False)
-   phone = db.Column(db.Integer)
+   blood_group = db.Column(db.String(120),nullable=False)
 
 
    def __repr__(self):
         return '<User %r>' % self.username
+
+
